@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: plant_stats_backend
+    restart: unless-stopped
+    volumes:
+      - ./backend/outputs:/app/outputs
+    environment:
+      - PYTHONUNBUFFERED=1
+    expose:
+      - "8000"
+
+  frontend:
+    build: ./frontend
+    container_name: plant_stats_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
