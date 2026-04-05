@@ -56,104 +56,143 @@ for (i in 1:p) {
     if (i == j) { sig_mat[i,j] <- "-"; next }
     pv <- p_mat[i,j]
     if (!is.na(pv)) {
-      if (pv < 0.001) sig_mat[i,j] <- "***"
-      else if (pv < 0.01) sig_mat[i,j] <- "**"
-      else if (pv < 0.05) sig_mat[i,j] <- "*"
+      if      (pv < 0.001) sig_mat[i,j] <- "***"
+      else if (pv < 0.01)  sig_mat[i,j] <- "**"
+      else if (pv < 0.05)  sig_mat[i,j] <- "*"
     }
   }
 }
 
-# --- Excel: NO fill, clean white ---
+# --- EXCEL: plain write, zero styling on data cells ---
 wb <- createWorkbook()
 
-no_fill    <- createStyle(bgFill = "#FFFFFF", fontName = "Calibri", fontSize = 11)
-header_sty <- createStyle(bgFill = "#FFFFFF", fontName = "Calibri", fontSize = 11,
-                           textDecoration = "bold", border = "Bottom", borderColour = "#AAAAAA")
-bold_sty   <- createStyle(bgFill = "#FFFFFF", fontName = "Calibri", fontSize = 11,
-                           textDecoration = "bold")
-
-write_sheet <- function(wb, sheet_name, df) {
-  addWorksheet(wb, sheet_name, gridLines = TRUE)
-  writeData(wb, sheet_name, df, borders = "none")
-  addStyle(wb, sheet_name, header_sty, rows = 1, cols = 1:ncol(df), gridExpand = TRUE)
-  addStyle(wb, sheet_name, bold_sty,   rows = 2:(nrow(df)+1), cols = 1)
-  addStyle(wb, sheet_name, no_fill,    rows = 2:(nrow(df)+1), cols = 2:ncol(df), gridExpand = TRUE)
+write_plain_sheet <- function(wb, sheet_name, df) {
+  addWorksheet(wb, sheet_name)
+  # Write header row manually with bold
+  header_style <- createStyle(textDecoration = "bold", border = "Bottom", borderColour = "#888888")
+  writeData(wb, sheet_name, df)
+  addStyle(wb, sheet_name, header_style, rows = 1, cols = 1:ncol(df), gridExpand = TRUE)
+  # NO style on data cells — leave completely unstyled (white by default)
+  setColWidths(wb, sheet_name, cols = 1:ncol(df), widths = "auto")
 }
 
-write_sheet(wb, "Correlation Matrix",
+write_plain_sheet(wb, "Correlation Matrix",
   cbind(Variable = vars, as.data.frame(round(cor_mat, 4))))
-write_sheet(wb, "P-values",
+write_plain_sheet(wb, "P-values",
   cbind(Variable = vars, as.data.frame(round(p_mat, 6))))
-write_sheet(wb, "Significance",
+write_plain_sheet(wb, "Significance",
   cbind(Variable = vars, as.data.frame(sig_mat)))
 
 addWorksheet(wb, "Summary")
 writeData(wb, "Summary", data.frame(
-  Parameter = c("Method","Sample Size","Variables","Significance"),
+  Parameter = c("Method", "Sample Size", "Variables", "Significance"),
   Value     = c(toupper(method), n, p, "* p<0.05  ** p<0.01  *** p<0.001")
 ))
 
 saveWorkbook(wb, file.path(output_dir, "correlation_results.xlsx"), overwrite = TRUE)
 
-# --- Heatmap ---
+# --- HEATMAP: corrplot then manually draw stars ---
 heatmap_title <- ifelse(nchar(plot_title) > 0, plot_title,
                         paste0(toupper(method), " Correlation Heatmap"))
 
 png(file.path(output_dir, "correlation_heatmap.png"), width = 1000, height = 920, res = 120)
-layout(matrix(c(1,2), nrow=2), heights = c(0.88, 0.12))
-par(mar = c(0,0,2,0))
+layout(matrix(c(1, 2), nrow = 2), heights = c(0.88, 0.12))
+par(mar = c(0, 0, 2, 0))
+
+# Draw corrplot WITHOUT p.mat (no blanking) so all cells are colored
 corrplot(cor_mat,
-  method = "color", col = col_palette, type = "upper", order = "hclust",
+  method      = "color",
+  col         = col_palette,
+  type        = "upper",
+  order       = "hclust",
   addCoef.col = if (show_coef) "black" else NA,
-  number.cex = axis_font_size * 0.78,
-  tl.col = "#333333", tl.srt = 45, tl.cex = axis_font_size,
-  p.mat = p_mat, sig.level = c(0.001, 0.01, 0.05), insig = "blank",
-  title = heatmap_title, mar = c(0,0,2,0)
+  number.cex  = axis_font_size * 0.78,
+  tl.col      = "#333333",
+  tl.srt      = 45,
+  tl.cex      = axis_font_size,
+  title       = heatmap_title,
+  mar         = c(0, 0, 2, 0)
 )
-par(mar = c(0,2,0,2))
+
+# Get corrplot reordered indices (hclust order)
+ord <- corrMatOrder(cor_mat, order = "hclust")
+cor_ordered <- cor_mat[ord, ord]
+p_ordered   <- p_mat[ord, ord]
+p_vars      <- vars[ord]
+n_vars      <- length(p_vars)
+
+# corrplot upper triangle cell positions (in plot coordinates)
+# corrplot maps variables to 1:p on both axes
+for (i in 1:n_vars) {
+  for (j in 1:n_vars) {
+    if (j <= i) next  # upper triangle only
+    pv <- p_ordered[i, j]
+    if (is.na(pv)) next
+    stars <- if (pv < 0.001) "***" else if (pv < 0.01) "**" else if (pv < 0.05) "*" else ""
+    if (nchar(stars) == 0) next
+    # corrplot coordinate system: x = j, y = n_vars + 1 - i
+    x_pos <- j
+    y_pos <- n_vars + 1 - i
+    text(x_pos, y_pos, stars, cex = axis_font_size * 0.9,
+         col = "black", font = 2, adj = c(0.5, -0.3))
+  }
+}
+
+# Footnote
+par(mar = c(0, 2, 0, 2))
 plot.new()
-text(0.5, 0.6, paste0("Significance: * p<0.05   ** p<0.01   *** p<0.001   (", toupper(method), " correlation, n=", n, ")"),
-     cex=0.82, col="#444444", adj=0.5)
+text(0.5, 0.6,
+  paste0("Significance: * p<0.05   ** p<0.01   *** p<0.001   (",
+         toupper(method), " correlation, n=", n, ")"),
+  cex = 0.82, col = "#444444", adj = 0.5)
 dev.off()
 
-# --- Scatter matrix ---
+# --- SCATTER MATRIX ---
 scatter_title <- ifelse(nchar(plot_title) > 0, plot_title,
                         paste0(toupper(method), " Correlation — Scatter Matrix"))
 
-upper_cor <- function(data, mapping, method="pearson", ...) {
+upper_cor <- function(data, mapping, method = "pearson", ...) {
   x  <- GGally::eval_data_col(data, mapping$x)
   y  <- GGally::eval_data_col(data, mapping$y)
-  ct <- cor.test(x, y, method=method)
+  ct <- cor.test(x, y, method = method)
   r  <- round(ct$estimate, 3)
   pv <- ct$p.value
-  stars <- if (pv<0.001) "***" else if (pv<0.01) "**" else if (pv<0.05) "*" else ""
-  ggplot(data=data, mapping=mapping) +
-    annotate("text", x=mean(range(x,na.rm=TRUE)), y=mean(range(y,na.rm=TRUE)),
-             label=paste0(r,stars), size=axis_font_size*4.5,
-             colour=if(r>0) "#0072B2" else "#D55E00", fontface="bold") +
+  stars <- if (pv < 0.001) "***" else if (pv < 0.01) "**" else if (pv < 0.05) "*" else ""
+  ggplot(data = data, mapping = mapping) +
+    annotate("text",
+      x      = mean(range(x, na.rm = TRUE)),
+      y      = mean(range(y, na.rm = TRUE)),
+      label  = paste0(r, stars),
+      size   = axis_font_size * 4.5,
+      colour = if (r > 0) "#0072B2" else "#D55E00",
+      fontface = "bold") +
     theme_void()
 }
 
-png(file.path(output_dir,"scatter_matrix.png"), width=scatter_width, height=scatter_height, res=scatter_dpi)
+png(file.path(output_dir, "scatter_matrix.png"),
+    width = scatter_width, height = scatter_height, res = scatter_dpi)
+
 p_scatter <- ggpairs(num_data,
-  upper = list(continuous = wrap(upper_cor, method=method)),
-  lower = list(continuous = wrap("smooth", alpha=0.35, color="#0072B2", fill="#56B4E9", size=0.6)),
-  diag  = list(continuous = wrap("densityDiag", fill="#009E73", alpha=0.45, color="#333333")),
+  upper = list(continuous = wrap(upper_cor, method = method)),
+  lower = list(continuous = wrap("smooth", alpha = 0.35,
+                                  color = "#0072B2", fill = "#56B4E9", size = 0.6)),
+  diag  = list(continuous = wrap("densityDiag", fill = "#009E73",
+                                   alpha = 0.45, color = "#333333")),
   title = scatter_title
-) + theme_minimal(base_size=axis_font_size*12) +
+) + theme_minimal(base_size = axis_font_size * 12) +
   theme(
-    plot.title=element_text(face="bold",size=axis_font_size*13,color="#1C1C1C"),
-    strip.background=element_rect(fill="#F0F0F0",color="#CCCCCC"),
-    strip.text=element_text(face="bold",color="#333333")
+    plot.title       = element_text(face = "bold", size = axis_font_size * 13, color = "#1C1C1C"),
+    strip.background = element_rect(fill = "#F0F0F0", color = "#CCCCCC"),
+    strip.text       = element_text(face = "bold", color = "#333333")
   )
 print(p_scatter)
 dev.off()
 
 result <- list(
-  status="success", method=method, n=n, variables=vars,
-  cor_matrix=cor_mat, p_matrix=p_mat, sig_matrix=sig_mat,
-  excel_file="correlation_results.xlsx",
-  heatmap_file="correlation_heatmap.png",
-  scatter_file="scatter_matrix.png"
+  status = "success", method = method, n = n, variables = vars,
+  cor_matrix = cor_mat, p_matrix = p_mat, sig_matrix = sig_mat,
+  excel_file = "correlation_results.xlsx",
+  heatmap_file = "correlation_heatmap.png",
+  scatter_file = "scatter_matrix.png"
 )
-cat(toJSON(result, auto_unbox=TRUE, digits=6))
+cat(toJSON(result, auto_unbox = TRUE, digits = 6))

@@ -32,14 +32,12 @@ palette_map <- list(
 )
 col_palette <- if (!is.null(palette_map[[heatmap_palette]])) palette_map[[heatmap_palette]] else palette_map[["RdBu"]]
 
-p <- nrow(cor_mat)
+n_vars <- nrow(cor_mat)
 
-layout(matrix(c(1, 2), nrow = 2), heights = c(0.88, 0.12))
 png(file.path(output_dir, "correlation_heatmap.png"), width = 1000, height = 920, res = 120)
-
 layout(matrix(c(1, 2), nrow = 2), heights = c(0.88, 0.12))
-
 par(mar = c(0, 0, 2, 0))
+
 corrplot(cor_mat,
   method      = "color",
   col         = col_palette,
@@ -50,19 +48,35 @@ corrplot(cor_mat,
   tl.col      = "#333333",
   tl.srt      = 45,
   tl.cex      = axis_font_size,
-  p.mat       = p_mat,
-  sig.level   = c(0.001, 0.01, 0.05),
-  insig       = "blank",
   title       = heatmap_title,
   mar         = c(0, 0, 2, 0)
 )
 
+# Manually draw significance stars
+ord         <- corrMatOrder(cor_mat, order = "hclust")
+cor_ordered <- cor_mat[ord, ord]
+p_ordered   <- p_mat[ord, ord]
+
+for (i in 1:n_vars) {
+  for (j in 1:n_vars) {
+    if (j <= i) next
+    pv <- p_ordered[i, j]
+    if (is.na(pv)) next
+    stars <- if (pv < 0.001) "***" else if (pv < 0.01) "**" else if (pv < 0.05) "*" else ""
+    if (nchar(stars) == 0) next
+    x_pos <- j
+    y_pos <- n_vars + 1 - i
+    text(x_pos, y_pos, stars, cex = axis_font_size * 0.9,
+         col = "black", font = 2, adj = c(0.5, -0.3))
+  }
+}
+
 par(mar = c(0, 2, 0, 2))
 plot.new()
 text(0.5, 0.6,
-  paste0("Significance: * p < 0.05   ** p < 0.01   *** p < 0.001   (", toupper(method), " correlation, n = ", n, ")"),
+  paste0("Significance: * p<0.05   ** p<0.01   *** p<0.001   (",
+         toupper(method), " correlation, n=", n, ")"),
   cex = 0.82, col = "#444444", adj = 0.5)
-
 dev.off()
 
 cat(toJSON(list(status = "success", heatmap_file = "correlation_heatmap.png"), auto_unbox = TRUE))
