@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import * as XLSX from "xlsx";
 
-const API_BASE = "";
+const API_BASE = "https://openbiology-backend.onrender.com";
 
 const METHOD_INFO = {
   pearson:  { label: "Pearson",  desc: "Linear relationships, normally distributed data" },
@@ -113,15 +114,21 @@ export default function CorrelationModule() {
 
   const handleFile = async (f) => {
     if (!f) return;
-    setFile(f); setResult(null); setError("");
-    if (f.name.toLowerCase().endsWith(".csv")) {
-      const text  = await f.text();
-      const lines = text.trim().split("\n").slice(0, 7);
-      const headers = lines[0].split(",").map(h => h.replace(/"/g,"").trim());
-      const rows    = lines.slice(1,6).map(l => l.split(",").map(c => c.replace(/"/g,"").trim()));
-      setFilePreview({ headers, rows, type: "csv", cols: headers.length, rowCount: text.trim().split("\n").length - 1 });
-    } else {
-      setFilePreview({ type: "excel", name: f.name, size: (f.size/1024).toFixed(1) });
+    setFile(f); setResult(null); setError(""); setFilePreview(null);
+    const fname = f.name.toLowerCase();
+    try {
+      const arrayBuffer = await f.arrayBuffer();
+      const workbook    = XLSX.read(arrayBuffer, { type: "array" });
+      const sheet       = workbook.Sheets[workbook.SheetNames[0]];
+      const allRows     = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
+      const headers     = allRows[0].map(h => String(h).trim());
+      const rows        = allRows.slice(1, 6).map(r =>
+        headers.map((_, i) => String(r[i] !== undefined ? r[i] : "").trim())
+      );
+      const totalRows   = allRows.length - 1;
+      setFilePreview({ headers, rows, type: "table", cols: headers.length, rowCount: totalRows });
+    } catch(e) {
+      setFilePreview({ type: "error", name: f.name, msg: "Could not preview file" });
     }
   };
 
@@ -213,7 +220,7 @@ export default function CorrelationModule() {
               {/* File preview */}
               {filePreview && (
                 <div style={{ marginTop:"0.7rem" }}>
-                  {filePreview.type === "csv" ? (
+                  {filePreview.type === "table" ? (
                     <>
                       <p style={{ margin:"0 0 0.3rem", fontSize:"0.7rem", color:"#555", fontWeight:600 }}>
                         Preview — {filePreview.cols} columns · {filePreview.rowCount} rows detected
@@ -221,8 +228,8 @@ export default function CorrelationModule() {
                       <DataTable headers={filePreview.headers} rows={filePreview.rows} small />
                     </>
                   ) : (
-                    <div style={{ background:"#F0F6FF", borderRadius:8, padding:"0.5rem 0.75rem", fontSize:"0.72rem", color:"#0072B2" }}>
-                      📄 <strong>{filePreview.name}</strong> · {filePreview.size} KB — Excel file ready
+                    <div style={{ background:"#FFF3F3", borderRadius:8, padding:"0.5rem 0.75rem", fontSize:"0.72rem", color:"#C0392B" }}>
+                      ⚠ {filePreview.msg || "Could not preview file"}
                     </div>
                   )}
                 </div>
