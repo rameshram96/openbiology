@@ -1,14 +1,12 @@
 """
 Correlation Module — FastAPI Router
-Handles: file upload, R script execution, file downloads
 """
 
 import json
-import os
 import subprocess
 import uuid
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal
 
 import pandas as pd
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
@@ -19,41 +17,35 @@ router = APIRouter(prefix="/api/correlation", tags=["Correlation"])
 OUTPUT_BASE = Path("outputs/correlation")
 OUTPUT_BASE.mkdir(parents=True, exist_ok=True)
 
-R_SCRIPT = Path(__file__).parent / "r_scripts" / "correlation_analysis.R"
+R_SCRIPT        = Path(__file__).parent / "r_scripts" / "correlation_analysis.R"
+R_HEATMAP_ONLY  = Path(__file__).parent / "r_scripts" / "heatmap_only.R"
 
 
-def run_r_analysis(payload: dict, session_dir: Path) -> dict:
+def run_r(script: Path, payload: dict, session_dir: Path) -> dict:
     input_file = session_dir / "input.json"
     input_file.write_text(json.dumps(payload))
-
     result = subprocess.run(
-        ["Rscript", str(R_SCRIPT), str(input_file), str(session_dir)],
+        ["Rscript", str(script), str(input_file), str(session_dir)],
         capture_output=True, text=True, timeout=180,
     )
-
     if result.returncode != 0:
         raise HTTPException(status_code=500, detail=f"R Error: {result.stderr}")
-
     try:
         start = result.stdout.index("{")
         return json.loads(result.stdout[start:])
     except (ValueError, json.JSONDecodeError):
-        raise HTTPException(status_code=500, detail=f"R output parse error: {result.stdout}")
+        raise HTTPException(status_code=500, detail=f"R parse error: {result.stdout}")
 
 
 @router.post("/analyze")
 async def analyze_correlation(
     file:            UploadFile = File(...),
     method:          Literal["pearson", "spearman", "kendall"] = Form("pearson"),
-    sig_level:       float  = Form(0.05),
-    # Heatmap options
+    sig_level:       float = Form(0.05),
     heatmap_palette: str   = Form("RdBu"),
     axis_font_size:  float = Form(0.85),
     show_coef:       bool  = Form(True),
     plot_title:      str   = Form(""),
-    x_label:         str   = Form(""),
-    y_label:         str   = Form(""),
-    # Scatter resolution
     scatter_dpi:     int   = Form(150),
     scatter_width:   int   = Form(1200),
     scatter_height:  int   = Form(1000),
@@ -80,39 +72,84 @@ async def analyze_correlation(
     session_dir.mkdir(parents=True)
 
     payload = {
-        "data":            numeric_df.to_dict(orient="list"),
-        "method":          method,
-        "sig_level":       sig_level,
+        "data": numeric_df.to_dict(orient="list"),
+        "method": method, "sig_level": sig_level,
+        "heatmap_palette": heatmap_palette, "axis_font_size": axis_font_size,
+        "show_coef": show_coef, "plot_title": plot_title,
+        "scatter_dpi": scatter_dpi, "scatter_width": scatter_width,
+        "scatter_height": scatter_height,
+    }
+
+    result = run_r(R_SCRIPT, payload, session_dir)
+    result["session_id"] = session_id
+    result["columns"]    = list(numeric_df.columns)
+    result["rows"]       = int(numeric_df.shape[0])
+    return JSONResponse(content=result)
+
+
+@router.post("/heatmap/{session_id}")
+async def regenerate_heatmap(
+    session_id:      str,
+    heatmap_palette: str   = Form("RdBu"),
+    axis_font_size:  float = Form(0.85),
+    show_coef:       bool  = Form(True),
+    plot_title:      str   = Form(""),
+):
+    """Regenerate heatmap only with new visual settings — no re-analysis."""
+    session_dir = OUTPUT_BASE / session_id
+    result_file = session_dir / "input.json"
+
+    if not result_file.exists():
+        raise HTTPException(status_code=404, detail="Session not found. Run analysis first.")
+
+    # Load previously stored analysis result
+    stored = json.loads(result_file.read_text())
+
+    payload = {
+        "cor_matrix":     stored.get("cor_matrix") or stored.get("data"),
+        "p_matrix":       stored.get("p_matrix"),
+        "method":         stored.get("method", "pearson"),
+        "n":              stored.get("n", 0),
         "heatmap_palette": heatmap_palette,
         "axis_font_size":  axis_font_size,
         "show_coef":       show_coef,
         "plot_title":      plot_title,
-        "x_label":         x_label,
-        "y_label":         y_label,
-        "scatter_dpi":     scatter_dpi,
-        "scatter_width":   scatter_width,
-        "scatter_height":  scatter_height,
     }
 
-    result = run_r_analysis(payload, session_dir)
-    result["session_id"] = session_id
-    result["columns"]    = list(numeric_df.columns)
-    result["rows"]       = int(numeric_df.shape[0])
+    # Save result alongside for heatmap re-use
+    heatmap_input = session_dir / "heatmap_input.json"
+    heatmap_input.write_text(json.dumps(payload))
 
-    return JSONResponse(content=result)
+    result = subprocess.run(
+        ["Rscript", str(R_HEATMAP_ONLY), str(heatmap_input), str(session_dir)],
+        capture_output=True, text=True, timeout=60,
+    )
+    if result.returncode != 0:
+        raise HTTPException(status_code=500, detail=f"R Error: {result.stderr}")
+
+    return JSONResponse(content={"status": "success"})
+
+
+@router.post("/save-result/{session_id}")
+async def save_result(session_id: str, payload: dict):
+    """Save full analysis result for later heatmap regeneration."""
+    session_dir = OUTPUT_BASE / session_id
+    session_dir.mkdir(parents=True, exist_ok=True)
+    (session_dir / "result.json").write_text(json.dumps(payload))
+    return {"status": "saved"}
 
 
 @router.get("/download/{session_id}/{file_type}")
 async def download_file(session_id: str, file_type: Literal["excel", "heatmap", "scatter"]):
     file_map = {
-        "excel":   ("correlation_results.xlsx",  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
-        "heatmap": ("correlation_heatmap.png",   "image/png"),
-        "scatter": ("scatter_matrix.png",         "image/png"),
+        "excel":   ("correlation_results.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+        "heatmap": ("correlation_heatmap.png",  "image/png"),
+        "scatter": ("scatter_matrix.png",        "image/png"),
     }
     filename, media_type = file_map[file_type]
     path = OUTPUT_BASE / session_id / filename
     if not path.exists():
-        raise HTTPException(status_code=404, detail="File not found. Run analysis first.")
+        raise HTTPException(status_code=404, detail="File not found.")
     return FileResponse(path=str(path), media_type=media_type, filename=filename)
 
 
@@ -122,4 +159,4 @@ async def preview_image(session_id: str, file_type: Literal["heatmap", "scatter"
     path = OUTPUT_BASE / session_id / file_map[file_type]
     if not path.exists():
         raise HTTPException(status_code=404, detail="Image not found")
-    return FileResponse(str(path), media_type="image/png")
+    return FileResponse(str(path), media_type="image/png", headers={"Cache-Control": "no-cache"})
