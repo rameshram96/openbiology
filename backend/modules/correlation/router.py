@@ -84,6 +84,14 @@ async def analyze_correlation(
     result["session_id"] = session_id
     result["columns"]    = list(numeric_df.columns)
     result["rows"]       = int(numeric_df.shape[0])
+
+    # BUG FIX: persist the full analysis result so heatmap regeneration
+    # can read cor_matrix / p_matrix without re-running the analysis.
+    # Previously, only input.json (raw data) was written — it never contained
+    # cor_matrix or p_matrix, so regenerate_heatmap was silently passing raw
+    # data to heatmap_only.R and producing garbage / crashing.
+    (session_dir / "result.json").write_text(json.dumps(result))
+
     return JSONResponse(content=result)
 
 
@@ -97,26 +105,27 @@ async def regenerate_heatmap(
 ):
     """Regenerate heatmap only with new visual settings — no re-analysis."""
     session_dir = OUTPUT_BASE / session_id
-    result_file = session_dir / "input.json"
 
+    # BUG FIX: read result.json (contains cor_matrix / p_matrix from analysis)
+    # instead of input.json (which only has raw input data and never contained
+    # the matrices that heatmap_only.R needs).
+    result_file = session_dir / "result.json"
     if not result_file.exists():
         raise HTTPException(status_code=404, detail="Session not found. Run analysis first.")
 
-    # Load previously stored analysis result
     stored = json.loads(result_file.read_text())
 
     payload = {
-        "cor_matrix":     stored.get("cor_matrix") or stored.get("data"),
-        "p_matrix":       stored.get("p_matrix"),
-        "method":         stored.get("method", "pearson"),
-        "n":              stored.get("n", 0),
+        "cor_matrix":      stored.get("cor_matrix"),
+        "p_matrix":        stored.get("p_matrix"),
+        "method":          stored.get("method", "pearson"),
+        "n":               stored.get("n", 0),
         "heatmap_palette": heatmap_palette,
         "axis_font_size":  axis_font_size,
         "show_coef":       show_coef,
         "plot_title":      plot_title,
     }
 
-    # Save result alongside for heatmap re-use
     heatmap_input = session_dir / "heatmap_input.json"
     heatmap_input.write_text(json.dumps(payload))
 
@@ -128,15 +137,6 @@ async def regenerate_heatmap(
         raise HTTPException(status_code=500, detail=f"R Error: {result.stderr}")
 
     return JSONResponse(content={"status": "success"})
-
-
-@router.post("/save-result/{session_id}")
-async def save_result(session_id: str, payload: dict):
-    """Save full analysis result for later heatmap regeneration."""
-    session_dir = OUTPUT_BASE / session_id
-    session_dir.mkdir(parents=True, exist_ok=True)
-    (session_dir / "result.json").write_text(json.dumps(payload))
-    return {"status": "saved"}
 
 
 @router.get("/download/{session_id}/{file_type}")
