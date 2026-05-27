@@ -6,6 +6,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from modules.correlation.router import router as correlation_router
+from modules.two_var_correlation.router import router as two_var_router
+
 
 app = FastAPI(
     title="OpenBiology",
@@ -22,6 +24,7 @@ app.add_middleware(
 )
 
 app.include_router(correlation_router)
+app.include_router(two_var_router)
 
 
 @app.get("/")
