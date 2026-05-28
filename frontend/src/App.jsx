@@ -2,6 +2,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import HomePage          from "./components/HomePage";
 import CorrelationModule from "./modules/correlation/CorrelationModule";
 import TwoVarCorrelation   from "./modules/two_var_correlation/TwoVarCorrelation";
+import PCAModule from "./modules/pca/PCAModule";
 import PortfolioPage     from "./pages/PortfolioPage";
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
@@ -37,6 +38,7 @@ export default function App() {
       <Route path="/"             element={<HomePage />} />
       <Route path="/correlation"  element={<ModulePage><CorrelationModule /></ModulePage>} />
       <Route path="/two-var-correlation" element={<ModulePage><TwoVarCorrelation /></ModulePage>} />
+      <Route path="/pca" element={<ModulePage><PCAModule /></ModulePage>} />
       <Route path="/portfolio"    element={<PortfolioPage />} />
       {/* <Route path="/anova"     element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>

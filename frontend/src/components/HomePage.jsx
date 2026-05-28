@@ -22,7 +22,7 @@ const ANALYSIS_MODULES = [
     color:    "#E69F00"
   },
   { id: "anova",          icon: "◈", title: "ANOVA Suite",            subtitle: "One-way · Two-way · Three-way",  desc: "Compare means across treatment groups with post-hoc tests — Tukey, Duncan, LSD.",               status: "soon",   color: "#E69F00" },
-  { id: "pca",            icon: "◎", title: "PCA & Multivariate",     subtitle: "PCA · Cluster · Discriminant",   desc: "Reduce dimensionality and uncover hidden structure in multi-trait phenotypic data.",            status: "soon",   color: "#009E73" },
+  { id: "pca",            icon: "◎", title: "Principle Component Analysis(PCA)",     subtitle: "PCA · Cluster · Discriminant",   desc: "Reduce dimensionality and uncover hidden structure in multi-trait phenotypic data.",            status: "ready",   color: "#009E73" },
   { id: "regression",     icon: "◬", title: "Regression",             subtitle: "Simple · Multiple · Stepwise",  desc: "Model trait relationships and predict outcomes across genotypes and environments.",             status: "soon",   color: "#CC79A7" },
   { id: "nonparametric",  icon: "◇", title: "Non-parametric Tests",   subtitle: "Kruskal-Wallis · Mann-Whitney", desc: "Robust statistical tests for non-normal distributions and small sample sizes.",                 status: "soon",   color: "#D55E00" },
   { id: "descriptive",    icon: "▣", title: "Descriptive Statistics", subtitle: "Mean · SD · CV · Normality",    desc: "Summarize datasets with comprehensive descriptive stats and normality diagnostics.",             status: "soon",   color: "#56B4E9" },
