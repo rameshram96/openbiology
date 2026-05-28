@@ -7,3 +7,5 @@ xlrd==2.0.1
 scipy
 scikit-learn>=1.4.0
 matplotlib>=3.8.0
+statsmodels
+seaborn
