@@ -29,6 +29,8 @@ const ANALYSIS_MODULES = [
 ];
 
 const PLANTSCIENCE_MODULES = [
+  {
+  id:   "peg-calculator", icon: "◌",title:    "PEG Calculator",subtitle: "PEG 6000 · PEG 8000 · Ψ ↔ g/L",desc:     "Calculate PEG 6000/8000 concentration for a target water potential, or find achieved Ψ from concentration. Forward and reverse modes.",status:   "ready",  color:    "#2D9E5F"},
   { id: "ptg-primer",     icon: "✦", title: "PTGprimerDesigner",      subtitle: "Golden Gate · PTG-CRISPR",      desc: "Design Golden Gate assembly primers for PTG-CRISPR constructs following the Xie et al. framework.", status: "ready", color: "#2D9E5F", url: "https://rameshram96.github.io/PTGprimerDesigner" },
   { id: "biosafe",        icon: "◉", title: "BioSafe Primer",         subtitle: "Overlapping PCR Design",        desc: "Design overlapping PCR primers for CRISPR validation with automated specificity checks.",         status: "ready", color: "#1B7A4A", url: "https://rameshram96.github.io/BioSafe-Primer" },
   { id: "hydro-calc",     icon: "◌", title: "Hydroponic Calculator",  subtitle: "Nutrient · Ion Balance",        desc: "Compute nutrient solution recipes with ionic compensation across N-source arms.",                  status: "soon",  color: "#4A9E6E" },
