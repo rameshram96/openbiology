@@ -14,7 +14,7 @@
  */
 
 const sponsor = {
-  active: false,                    // true = show banner, false = show fallback
+  active: true,                    // true = show banner, false = show fallback
   image:  "/sponsor/banner.jpg",    // path inside public/ folder
   link:   "",                       // sponsor URL, or "" for no hyperlink
 };
