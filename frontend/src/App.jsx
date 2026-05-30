@@ -1,12 +1,13 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import HomePage          from "./components/HomePage";
-import CorrelationModule from "./modules/correlation/CorrelationModule";
+import HomePage            from "./components/HomePage";
+import CorrelationModule   from "./modules/correlation/CorrelationModule";
 import TwoVarCorrelation   from "./modules/two_var_correlation/TwoVarCorrelation";
-import PCAModule from "./modules/pca/PCAModule";
-import PEGCalculator from "./modules/peg_calculator/PEGCalculator";
-import PortfolioPage     from "./pages/PortfolioPage";
-import RegressionModule from "./modules/regression/RegressionModule";
-// import AnovaModule    from "./modules/anova/AnovaModule";
+import PCAModule           from "./modules/pca/PCAModule";
+import PEGCalculator       from "./modules/peg_calculator/PEGCalculator";
+import RegressionModule    from "./modules/regression/RegressionModule";
+import PortfolioPage       from "./pages/PortfolioPage";
+import BlogPage            from "./modules/blog/BlogPage";
+import BlogArticle         from "./modules/blog/BlogArticle";
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -22,7 +23,20 @@ const TopBar = () => {
         color: "#fff", borderRadius: 8, padding: "0.35rem 0.9rem",
         cursor: "pointer", fontSize: "0.82rem", fontWeight: 600,
       }}>← Home</button>
-      <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem" }}>🌿 OpenBiology</span>
+      <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem" }}>
+        🌿 OpenBiology
+      </span>
+      <button onClick={() => navigate("/blog")} style={{
+        background: "transparent", border: "none",
+        color: "rgba(255,255,255,0.65)", borderRadius: 8,
+        padding: "0.35rem 0.9rem", cursor: "pointer",
+        fontSize: "0.82rem", fontWeight: 500, marginLeft: "auto",
+      }}
+        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.65)"}
+      >
+        Blog
+      </button>
     </div>
   );
 };
@@ -37,14 +51,16 @@ const ModulePage = ({ children }) => (
 export default function App() {
   return (
     <Routes>
-      <Route path="/"             element={<HomePage />} />
-      <Route path="/correlation"  element={<ModulePage><CorrelationModule /></ModulePage>} />
+      <Route path="/"                    element={<HomePage />} />
+      <Route path="/correlation"         element={<ModulePage><CorrelationModule /></ModulePage>} />
       <Route path="/two-var-correlation" element={<ModulePage><TwoVarCorrelation /></ModulePage>} />
-      <Route path="/pca" element={<ModulePage><PCAModule /></ModulePage>} />
-      <Route path="/regression" element={<ModulePage><RegressionModule /></ModulePage>} />
-      <Route path="/peg-calculator" element={<ModulePage><PEGCalculator /></ModulePage>} />
-      <Route path="/portfolio"    element={<PortfolioPage />} />
-      {/* <Route path="/anova"     element={<ModulePage><AnovaModule /></ModulePage>} /> */}
+      <Route path="/pca"                 element={<ModulePage><PCAModule /></ModulePage>} />
+      <Route path="/regression"          element={<ModulePage><RegressionModule /></ModulePage>} />
+      <Route path="/peg-calculator"      element={<ModulePage><PEGCalculator /></ModulePage>} />
+      <Route path="/portfolio"           element={<PortfolioPage />} />
+      <Route path="/blog"                element={<BlogPage />} />
+      <Route path="/blog/:slug"          element={<BlogArticle />} />
+      {/* <Route path="/anova"           element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );
 }
