@@ -8,6 +8,7 @@ from modules.correlation.router import router as correlation_router
 from modules.two_var_correlation.router import router as two_var_router
 from modules.regression.router import router as regression_router
 from modules.pca.router import router as pca_router
+from modules.sponsor.router import router as sponsor_router
 
 
 app = FastAPI(
@@ -28,6 +29,7 @@ app.include_router(correlation_router)
 app.include_router(two_var_router)
 app.include_router(pca_router)
 app.include_router(regression_router)
+app.include_router(sponsor_router)
 
 
 @app.get("/")

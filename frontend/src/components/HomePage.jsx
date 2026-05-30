@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import SponsorBanner from "./SponsorBanner";
 // ─── Data ────────────────────────────────────────────────────────────────────
+
+<div style={fade(0.06)}>
+  <SponsorBanner />
+</div>
 
 const NAV_SECTIONS = [
   { id: "analysis",       label: "Data Analysis" },
@@ -9,6 +13,8 @@ const NAV_SECTIONS = [
   { id: "bioinformatics", label: "Bioinformatics" },
   { id: "blog",           label: "Blog" },
 ];
+
+
 
 const ANALYSIS_MODULES = [
   { id: "correlation",    icon: "⬡", title: "Correlation Analysis",   subtitle: "Pearson · Spearman · Kendall",   desc: "Explore relationships between plant traits with correlation matrices, heatmaps and scatter plots.", status: "ready",  color: "#0072B2" },
