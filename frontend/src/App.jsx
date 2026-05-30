@@ -1,13 +1,14 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import HomePage            from "./components/HomePage";
-import CorrelationModule   from "./modules/correlation/CorrelationModule";
+import HomePage          from "./components/HomePage";
+import CorrelationModule from "./modules/correlation/CorrelationModule";
 import TwoVarCorrelation   from "./modules/two_var_correlation/TwoVarCorrelation";
-import PCAModule           from "./modules/pca/PCAModule";
-import PEGCalculator       from "./modules/peg_calculator/PEGCalculator";
-import RegressionModule    from "./modules/regression/RegressionModule";
-import PortfolioPage       from "./pages/PortfolioPage";
-import BlogPage            from "./modules/blog/BlogPage";
-import BlogArticle         from "./modules/blog/BlogArticle";
+import PCAModule from "./modules/pca/PCAModule";
+import PEGCalculator from "./modules/peg_calculator/PEGCalculator";
+import PortfolioPage     from "./pages/PortfolioPage";
+import RegressionModule from "./modules/regression/RegressionModule";
+import BlogPage          from "./modules/blog/BlogPage";
+import BlogArticle       from "./modules/blog/BlogArticle";
+// import AnovaModule    from "./modules/anova/AnovaModule";
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const TopBar = () => {
       <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem" }}>
         🌿 OpenBiology
       </span>
+      {/* Blog link in TopBar so it's reachable from any module page */}
       <button onClick={() => navigate("/blog")} style={{
         background: "transparent", border: "none",
         color: "rgba(255,255,255,0.65)", borderRadius: 8,
@@ -51,16 +53,17 @@ const ModulePage = ({ children }) => (
 export default function App() {
   return (
     <Routes>
-      <Route path="/"                    element={<HomePage />} />
-      <Route path="/correlation"         element={<ModulePage><CorrelationModule /></ModulePage>} />
+      <Route path="/"             element={<HomePage />} />
+      <Route path="/correlation"  element={<ModulePage><CorrelationModule /></ModulePage>} />
       <Route path="/two-var-correlation" element={<ModulePage><TwoVarCorrelation /></ModulePage>} />
-      <Route path="/pca"                 element={<ModulePage><PCAModule /></ModulePage>} />
-      <Route path="/regression"          element={<ModulePage><RegressionModule /></ModulePage>} />
-      <Route path="/peg-calculator"      element={<ModulePage><PEGCalculator /></ModulePage>} />
-      <Route path="/portfolio"           element={<PortfolioPage />} />
-      <Route path="/blog"                element={<BlogPage />} />
-      <Route path="/blog/:slug"          element={<BlogArticle />} />
-      {/* <Route path="/anova"           element={<ModulePage><AnovaModule /></ModulePage>} /> */}
+      <Route path="/pca" element={<ModulePage><PCAModule /></ModulePage>} />
+      <Route path="/regression" element={<ModulePage><RegressionModule /></ModulePage>} />
+      <Route path="/peg-calculator" element={<ModulePage><PEGCalculator /></ModulePage>} />
+      <Route path="/portfolio"    element={<PortfolioPage />} />
+      {/* Blog routes — no ModulePage wrapper; BlogPage/BlogArticle have their own header */}
+      <Route path="/blog"          element={<BlogPage />} />
+      <Route path="/blog/:slug"    element={<BlogArticle />} />
+      {/* <Route path="/anova"      element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );
 }
