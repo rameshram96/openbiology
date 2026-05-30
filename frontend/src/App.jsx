@@ -6,6 +6,7 @@ import RegressionModule from "./modules/regression/RegressionModule";
 import PCAModule from "./modules/pca/PCAModule";
 import PEGCalculator from "./modules/peg_calculator/PEGCalculator";
 import PortfolioPage     from "./pages/PortfolioPage";
+import RegressionModule from "./modules/regression/RegressionModule";
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
 const TopBar = () => {
@@ -44,6 +45,7 @@ export default function App() {
       <Route path="/regression" element={<ModulePage><RegressionModule /></ModulePage>} />
       <Route path="/peg-calculator" element={<ModulePage><PEGCalculator /></ModulePage>} />
       <Route path="/portfolio"    element={<PortfolioPage />} />
+      <Route path="/regression" element={<ModulePage><RegressionModule /></ModulePage>} />
       {/* <Route path="/anova"     element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );
