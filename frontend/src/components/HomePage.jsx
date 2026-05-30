@@ -156,7 +156,7 @@ export default function HomePage() {
       <div style={{ background: "#1C1C1C", padding: "0 2.5rem", height: 52, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 12px rgba(0,0,0,0.18)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           <span style={{ fontSize: 16 }}>🌿</span>
-          <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.88rem", letterSpacing: "-0.01em" }}>OpenBiology</span>
+          <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.88rem", letterSpacing: "-0.01em" }}>OpenBiology.in</span>
         </div>
 
         {/* Section nav */}
@@ -188,14 +188,14 @@ export default function HomePage() {
         <div style={{ ...fade(0), textAlign: "center", marginBottom: "3.5rem" }}>
           <div style={{ display: "inline-block", background: "#E8F4FD", border: "1px solid #56B4E9", borderRadius: 999, padding: "0.25rem 1rem", marginBottom: "1rem" }}>
             <span style={{ color: "#0072B2", fontSize: "0.67rem", fontFamily: "'DM Mono'", letterSpacing: 1.5, textTransform: "uppercase" }}>
-              Statistical · Plant Science · Bioinformatics
+              Statistics · Plant Science · Bioinformatics
             </span>
           </div>
           <h1 style={{ margin: "0 0 0.8rem", fontSize: "clamp(1.8rem,3.8vw,2.8rem)", fontWeight: 700, color: "#1C1C1C", lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-            Open Tools for Plant Scientists
+            Open Tools for Plant Science Research Community
           </h1>
           <p style={{ color: "#777", fontSize: "0.9rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.8, fontWeight: 300 }}>
-            A free, modular platform for data analysis, plant science utilities, and bioinformatics — built by a researcher, for researchers.
+            A free platform for data analysis, plant science utilities, and bioinformatics — built by a researcher, for researchers.
           </p>
         </div>
 
@@ -318,7 +318,7 @@ export default function HomePage() {
             <div>
               <h4 style={{ margin: "0 0 0.3rem", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1C" }}>Support OpenBiology 🌱</h4>
               <p style={{ margin: 0, fontSize: "0.72rem", color: "#777", lineHeight: 1.65, fontWeight: 300, maxWidth: 260 }}>
-                OpenBiology is free for everyone. If it's been useful in your research, any support — however small — helps keep it running.{" "}
+                Openbiology.in is free for everyone. If it's been useful in your research, any support — however small — helps keep it running.{" "}
                 <em style={{ color: "#009E73" }}>No obligation at all.</em>
               </p>
               <p style={{ margin: "0.45rem 0 0", fontSize: "0.65rem", color: "#0072B2", fontWeight: 600, fontFamily: "'DM Mono'" }}>Scan QR · UPI supported</p>
