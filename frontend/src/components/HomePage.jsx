@@ -162,7 +162,8 @@ export default function HomePage() {
         {/* Section nav */}
         <div style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
           {NAV_SECTIONS.map(s => (
-            <button key={s.id} onClick={() => scrollTo(s.id)}
+            <button key={s.id}
+              onClick={() => s.id === "blog" ? navigate("/blog") : scrollTo(s.id)}
               style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.65)", fontSize: "0.74rem", fontWeight: 500, cursor: "pointer", padding: "0.3rem 0.65rem", borderRadius: 6, transition: "color 0.15s, background 0.15s", fontFamily: "'DM Sans', sans-serif" }}
               onMouseEnter={e => { e.target.style.color = "#fff"; e.target.style.background = "rgba(255,255,255,0.1)"; }}
               onMouseLeave={e => { e.target.style.color = "rgba(255,255,255,0.65)"; e.target.style.background = "transparent"; }}
@@ -259,11 +260,14 @@ export default function HomePage() {
           </div>
 
           {BLOG_POSTS.length === 0 ? (
-            <div style={{ background: "#fff", borderRadius: 12, border: "1.5px dashed #E0E0E0", padding: "2.5rem", textAlign: "center", marginBottom: "3rem" }}>
-              <div style={{ fontSize: 28, marginBottom: "0.6rem" }}>✍️</div>
-              <p style={{ margin: "0 0 0.3rem", fontSize: "0.85rem", fontWeight: 600, color: "#BBBBBB" }}>First post coming soon</p>
-              <p style={{ margin: 0, fontSize: "0.74rem", color: "#CCCCCC", fontWeight: 300 }}>Methods, tutorials, and research notes for plant scientists</p>
-            </div>
+            <button onClick={() => navigate("/blog")} style={{
+            marginTop: "0.75rem",
+            padding: "0.4rem 1rem",
+            background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
+            border: "none", borderRadius: 8, color: "#fff",
+            fontSize: "0.75rem", fontWeight: 600, cursor: "pointer",}}>
+            Go to Blog →
+           </button>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "0.85rem", marginBottom: "3rem" }}>
               {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
