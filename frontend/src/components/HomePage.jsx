@@ -179,7 +179,7 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
           <button onClick={() => navigate("/portfolio")}
             style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.22)", color: "rgba(255,255,255,0.75)", borderRadius: 7, padding: "0.25rem 0.8rem", fontSize: "0.72rem", cursor: "pointer", fontWeight: 500 }}>
-            Developer
+            Developer Info
           </button>
           <span style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.65rem", fontFamily: "'DM Mono'" }}>v1.0</span>
         </div>
@@ -254,8 +254,8 @@ export default function HomePage() {
             <SectionHeading
               id="blog-heading"
               icon="📝"
-              title="Blog"
-              desc="Methods, tutorials, and research notes from the lab."
+              title="Knowledge Hub"
+              desc="Methods, tutorials, and research summaries."
             />
             {BLOG_POSTS.length > 0 && (
               <button style={{ padding: "0.28rem 0.8rem", borderRadius: 7, border: "1px solid #0072B2", background: "transparent", color: "#0072B2", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", alignSelf: "flex-start", marginTop: "0.1rem" }}>
@@ -266,13 +266,20 @@ export default function HomePage() {
 
           {BLOG_POSTS.length === 0 ? (
             <button onClick={() => navigate("/blog")} style={{
-            marginTop: "0.75rem",
-            padding: "0.4rem 1rem",
-            background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
-            border: "none", borderRadius: 8, color: "#fff",
-            fontSize: "0.75rem", fontWeight: 600, cursor: "pointer",}}>
-            Go to Blog →
-           </button>
+              marginTop: "1rem",
+              padding: "0.75rem 2rem",
+              background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
+              border: "none", borderRadius: 10, color: "#fff",
+              fontSize: "0.88rem", fontWeight: 600, cursor: "pointer",
+              letterSpacing: "0.02em",
+              boxShadow: "0 2px 10px rgba(26,58,26,0.25)",
+              transition: "opacity 0.15s",
+                }}
+  onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+>
+  Go to Blog →
+</button>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "0.85rem", marginBottom: "3rem" }}>
               {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
