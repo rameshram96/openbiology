@@ -34,14 +34,14 @@ const ANALYSIS_MODULES = [
 ];
 
 const PLANTSCIENCE_MODULES = [
-  {
-  id:   "peg-calculator", icon: "◌",title:    "PEG Calculator",subtitle: "PEG 6000 · PEG 8000 · Ψ ↔ g/L",desc:     "Calculate PEG 6000/8000 concentration for a target water potential, or find achieved Ψ from concentration. Forward and reverse modes.",status:   "ready",  color:    "#2D9E5F"},
-  { id: "ptg-primer",     icon: "✦", title: "PTGprimerDesigner",      subtitle: "Golden Gate · PTG-CRISPR",      desc: "Design Golden Gate assembly primers for PTG-CRISPR constructs following the Xie et al. framework.", status: "ready", color: "#2D9E5F", url: "https://rameshram96.github.io/PTGprimerDesigner" },
-  { id: "biosafe",        icon: "◉", title: "BioSafe Primer",         subtitle: "Overlapping PCR Design",        desc: "Design overlapping PCR primers for CRISPR validation with automated specificity checks.",         status: "ready", color: "#1B7A4A", url: "https://rameshram96.github.io/BioSafe-Primer" },
+  { id: "peg-calculator", icon: "◌",title:    "PEG Calculator",subtitle: "PEG 6000 · PEG 8000 · Ψ ↔ g/L",desc:     "Calculate PEG 6000/8000 concentration for a target water potential, or find achieved Ψ from concentration. Forward and reverse modes.",status:   "ready",  color:    "#2D9E5F"},
+  { id: "iari_weather",     icon: "✦", title: "IARI-Weather Data",      subtitle: "Weather Data · ICAR-IARI",      desc: "An automated dashboard that scrapes, archives, and visualises daily meteorological data from ICAR–IARI, New Delhi", status: "ready", color: "#2D9E5F", url: "https://rameshram96.github.io/iari_weather_data/" },
   { id: "hydro-calc",     icon: "◌", title: "Hydroponic Calculator",  subtitle: "Nutrient · Ion Balance",        desc: "Compute nutrient solution recipes with ionic compensation across N-source arms.",                  status: "soon",  color: "#4A9E6E" },
 ];
 
 const BIOINFORMATICS_MODULES = [
+  { id: "ptg-primer",     icon: "✦", title: "PTGprimerDesigner",      subtitle: "Golden Gate · PTG-CRISPR",      desc: "Design Golden Gate assembly primers for PTG-CRISPR constructs following the Xie et al. framework.", status: "ready", color: "#2D9E5F", url: "https://rameshram96.github.io/PTGprimerDesigner" },
+  { id: "biosafe",        icon: "◉", title: "BioSafe Primer",         subtitle: "Overlapping PCR Design",        desc: "Design overlapping PCR primers for CRISPR validation with automated specificity checks.",         status: "ready", color: "#1B7A4A", url: "https://rameshram96.github.io/BioSafe-Primer" },
   { id: "haplo",          icon: "◑", title: "Haplotype Viewer",       subtitle: "SNP · Association · 3K Panel",  desc: "Visualize haplotype-phenotype associations from SNP data, with subpopulation filtering.",         status: "soon",  color: "#5B3FA6" },
   { id: "variant",        icon: "⬟", title: "Variant Annotator",      subtitle: "VCF · Effect · Gene Model",     desc: "Annotate plant genome variants with functional effect predictions and gene context.",            status: "soon",  color: "#7B5EA7" },
 ];
@@ -275,11 +275,10 @@ export default function HomePage() {
               boxShadow: "0 2px 10px rgba(26,58,26,0.25)",
               transition: "opacity 0.15s",
                 }}
-  onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
-  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
->
-  Go to Blog →
-</button>
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+              Go to Blog →
+            </button>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "0.85rem", marginBottom: "3rem" }}>
               {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
