@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SponsorBanner from "./SponsorBanner";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 
@@ -200,7 +201,9 @@ export default function HomePage() {
             A free platform for data analysis, plant science utilities, and bioinformatics — built by a researcher, for researchers.
           </p>
         </div>
-
+          <div style={fade(0.06)}>
+             <SponsorBanner />
+          </div>
         {/* ── Data Analysis ──────────────────────────────────────────────── */}
         <div style={fade(0.08)} id="analysis">
           <SectionHeading
