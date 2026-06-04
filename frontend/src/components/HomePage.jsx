@@ -274,25 +274,49 @@ export default function HomePage() {
           </div>
 
           {BLOG_POSTS.length === 0 ? (
-            <button onClick={() => navigate("/blog")} style={{
-              marginTop: "1rem",
-              padding: "0.75rem 2rem",
-              background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
-              border: "none", borderRadius: 10, color: "#fff",
-              fontSize: "0.88rem", fontWeight: 600, cursor: "pointer",
-              letterSpacing: "0.02em",
-              boxShadow: "0 2px 10px rgba(26,58,26,0.25)",
-              transition: "opacity 0.15s",
-                }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              Go to Blog →
-            </button>
-          ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "0.85rem", marginBottom: "3rem" }}>
-              {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
-            </div>
-          )}
+  <div style={{
+    background: "#fff",
+    borderRadius: 16,
+    boxShadow: "0 2px 16px rgba(26,58,26,0.10)",
+    padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 180,
+  }}>
+    <button onClick={() => navigate("/blog")} style={{
+      marginTop: "1rem",
+      padding: "0.75rem 2rem",
+      background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
+      border: "none", borderRadius: 10, color: "#fff",
+      fontSize: "0.88rem", fontWeight: 600, cursor: "pointer",
+      letterSpacing: "0.02em",
+      boxShadow: "0 2px 10px rgba(26,58,26,0.25)",
+      transition: "opacity 0.15s",
+    }}
+      onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+      Go to Blog →
+    </button>
+  </div>
+) : (
+  <div style={{
+    background: "#fff",
+    borderRadius: 16,
+    boxShadow: "0 2px 16px rgba(26,58,26,0.10)",
+    padding: "1.5rem",
+    marginBottom: "3rem",
+  }}>
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
+      gap: "0.85rem",
+    }}>
+      {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
+    </div>
+  </div>
+)}
         </div>
 
         {/* ── Developer + Support Banner ─────────────────────────────────── */}
