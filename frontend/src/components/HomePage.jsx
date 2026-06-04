@@ -176,7 +176,7 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
           {NAV_SECTIONS.map(s => (
             <button key={s.id}
-              onClick={() => s.id === "blog" || s.id === "feedback" ? navigate("/blog") : scrollTo(s.id)}
+              onClick={() => s.id === "blog" || s.id === "feedback"? navigate(`/${s.id}`): scrollTo(s.id)}
               style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.65)", fontSize: "0.74rem", fontWeight: 500, cursor: "pointer", padding: "0.3rem 0.65rem", borderRadius: 6, transition: "color 0.15s, background 0.15s", fontFamily: "'DM Sans', sans-serif" }}
               onMouseEnter={e => { e.target.style.color = "#fff"; e.target.style.background = "rgba(255,255,255,0.1)"; }}
               onMouseLeave={e => { e.target.style.color = "rgba(255,255,255,0.65)"; e.target.style.background = "transparent"; }}
