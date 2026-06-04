@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from "react";
 
 const API_BASE = "https://openbiology-backend.onrender.com";
 
-// ─── Example data (embedded as CSV strings) ─────────────────────────────────
+// ─── Example data (embedded as CSV strings) ──────────────────────────────────
 
 const EXAMPLE_GERM_CSV = `Treatment,Replicate,3,5,7,10,14
 Control,1,0,8,18,24,25
