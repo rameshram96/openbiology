@@ -297,7 +297,7 @@ export default function HomePage() {
     }}
       onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
       onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-      Go to Blog →
+      Go to Knowledge Hub →
     </button>
   </div>
 ) : (
@@ -305,8 +305,10 @@ export default function HomePage() {
     background: "#fff",
     borderRadius: 16,
     boxShadow: "0 2px 16px rgba(26,58,26,0.10)",
-    padding: "1.5rem",
+    padding: "1rem",
     marginBottom: "3rem",
+    maxWidth: "900px",  
+  margin: "0 auto 3rem",
   }}>
     <div style={{
       display: "grid",
