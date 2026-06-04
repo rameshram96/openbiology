@@ -8,6 +8,8 @@ import PortfolioPage     from "./pages/PortfolioPage";
 import RegressionModule from "./modules/regression/RegressionModule";
 import BlogPage          from "./modules/blog/BlogPage";
 import BlogArticle       from "./modules/blog/BlogArticle";
+import SeedGerminationModule from "./modules/seed_germination/SeedGerminationModule";
+
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
 const TopBar = () => {
@@ -63,6 +65,7 @@ export default function App() {
       {/* Blog routes — no ModulePage wrapper; BlogPage/BlogArticle have their own header */}
       <Route path="/blog"          element={<BlogPage />} />
       <Route path="/blog/:slug"    element={<BlogArticle />} />
+      <Route path="/seed-germination" element={<ModulePage><SeedGerminationModule /></ModulePage>} />
       {/* <Route path="/anova"      element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );

@@ -35,6 +35,15 @@ const ANALYSIS_MODULES = [
 
 const PLANTSCIENCE_MODULES = [
   { id: "peg-calculator", icon: "◌",title:    "PEG Calculator",subtitle: "PEG 6000 · PEG 8000 · Ψ ↔ g/L",desc:     "Calculate PEG 6000/8000 concentration for a target water potential, or find achieved Ψ from concentration. Forward and reverse modes.",status:   "ready",  color:    "#2D9E5F"},
+ {
+  id:       "seed-germination",
+  icon:     "🌱",
+  title:    "Seed Germination Analysis",
+  subtitle: "Kinetics · Vigour · Stress Tolerance",
+  desc:     "Compute 16 germination indices including Timson, ERI and Weibull T50, plus 14 seedling metrics with STI, dry weight and vigor scoring.",
+  status:   "ready",
+  color:    "#2D9E5F"
+},
   { id: "iari_weather",     icon: "✦", title: "IARI-Weather Data",      subtitle: "Weather Data · ICAR-IARI",      desc: "An automated dashboard that scrapes, archives, and visualises daily meteorological data from ICAR–IARI, New Delhi", status: "ready", color: "#2D9E5F", url: "https://rameshram96.github.io/iari_weather_data/" },
   { id: "hydro-calc",     icon: "◌", title: "Hydroponic Calculator",  subtitle: "Nutrient · Ion Balance",        desc: "Compute nutrient solution recipes with ionic compensation across N-source arms.",                  status: "soon",  color: "#4A9E6E" },
 ];
