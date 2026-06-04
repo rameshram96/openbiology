@@ -9,6 +9,7 @@ import RegressionModule from "./modules/regression/RegressionModule";
 import BlogPage          from "./modules/blog/BlogPage";
 import BlogArticle       from "./modules/blog/BlogArticle";
 import SeedGerminationModule from "./modules/seed_germination/SeedGerminationModule";
+import FeedbackPage from "./modules/feedback/FeedbackPage";
 
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
@@ -66,6 +67,7 @@ export default function App() {
       <Route path="/blog"          element={<BlogPage />} />
       <Route path="/blog/:slug"    element={<BlogArticle />} />
       <Route path="/seed-germination" element={<ModulePage><SeedGerminationModule /></ModulePage>} />
+      <Route path="/feedback" element={<ModulePage><FeedbackPage /></ModulePage>} />
       {/* <Route path="/anova"      element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );
