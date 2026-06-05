@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# R packages
-RUN Rscript -e "install.packages(c('jsonlite','corrplot','ggplot2','reshape2','GGally','openxlsx','gridExtra'), repos='https://cloud.r-project.org')"
 
 # Python deps
 WORKDIR /app
