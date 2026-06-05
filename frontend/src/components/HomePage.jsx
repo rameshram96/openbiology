@@ -332,7 +332,7 @@ export default function HomePage() {
             <div>
               <h3 style={{ margin: "0 0 0.15rem", fontSize: "0.9rem", fontWeight: 700, color: "#1C1C1C" }}>Ramesh R</h3>
               <p style={{ margin: "0 0 0.55rem", fontSize: "0.7rem", color: "#0072B2", fontWeight: 500 }}>
-                Plant Physiologist · CRISPR Researcher · IARI New Delhi
+                Plant Physiologist · Genome Editor · IARI New Delhi
               </p>
               <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
                 {[
@@ -350,7 +350,32 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-
+                
+          <div style={{ display: "flex", alignItems: "center", gap: "1.1rem", flex: "1 1 300px" }}>
+            <img src="https://rameshram96.github.io/Ramesh-Ramasamy/profile.jpg" alt="Mathiyarasi K"
+              style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover", border: "2.5px solid #E8F4FD", flexShrink: 0, boxShadow: "0 2px 8px rgba(0,114,178,0.12)" }} />
+            
+            <div>
+              <h3 style={{ margin: "0 0 0.15rem", fontSize: "0.9rem", fontWeight: 700, color: "#1C1C1C" }}>Mathiyarasi K</h3>
+              <p style={{ margin: "0 0 0.55rem", fontSize: "0.7rem", color: "#0072B2", fontWeight: 500 }}>
+                Environmental Science Scholar  · Climate CHange · IARI New Delhi
+              </p>
+              <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                {[
+                  { label: "GitHub",       url: "https://github.com/mathiyarasi21",                                 color: "#1C1C1C" },
+                  { label: "ResearchGate", url: "",                color: "#00CCBB" },
+                  { label: "Scholar",      url: "",   color: "#4285F4" },
+                  { label: "Portfolio",    url: "",                                                      color: "#0072B2" },
+                ].map(link => (
+                  <a key={link.label} href={link.url} target={link.url.startsWith("/") ? undefined : "_blank"} rel="noreferrer"
+                    onClick={link.url.startsWith("/") ? (e) => { e.preventDefault(); navigate(link.url); } : undefined}
+                    style={{ padding: "0.2rem 0.55rem", borderRadius: 6, border: `1px solid ${link.color}22`, background: `${link.color}0d`, color: link.color, fontSize: "0.65rem", fontWeight: 600, textDecoration: "none" }}>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
           {/* Divider */}
           <div style={{ width: 1, alignSelf: "stretch", background: "#EBEBEB", flexShrink: 0, display: "block" }} />
 
