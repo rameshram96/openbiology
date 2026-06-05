@@ -352,7 +352,7 @@ export default function HomePage() {
           </div>
                 
           <div style={{ display: "flex", alignItems: "center", gap: "1.1rem", flex: "1 1 300px" }}>
-            <img src="https://rameshram96.github.io/Ramesh-Ramasamy/profile.jpg" alt="Mathiyarasi K"
+            <img src="" alt="Mathiyarasi K"
               style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover", border: "2.5px solid #E8F4FD", flexShrink: 0, boxShadow: "0 2px 8px rgba(0,114,178,0.12)" }} />
             
             <div>
