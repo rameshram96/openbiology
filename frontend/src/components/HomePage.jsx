@@ -260,20 +260,113 @@ export default function HomePage() {
         </div>
 
         {/* ── Blog ───────────────────────────────────────────────────────── */}
-        <div style={fade(0.22)} id="blog">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-            <SectionHeading
-              id="blog-heading"
-              icon="📝"
-              title="Knowledge Hub"
-              desc="Methods, tutorials, and research summaries."
-            />
-            {BLOG_POSTS.length > 0 && (
-              <button style={{ padding: "0.28rem 0.8rem", borderRadius: 7, border: "1px solid #0072B2", background: "transparent", color: "#0072B2", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", alignSelf: "flex-start", marginTop: "0.1rem" }}>
-                View all →
-              </button>
-            )}
-          </div>
+<div style={fade(0.22)} id="blog">
+
+  {/* ── Option C header ─────────────────────────────────────────── */}
+  <div style={{
+    background: "#fff",
+    borderRadius: 14,
+    border: "1.5px solid #EBEBEB",
+    padding: "1.1rem 1.35rem",
+    marginBottom: "1.25rem",
+  }}>
+
+    {/* Top row: title + tag chips */}
+    <div style={{
+      display: "flex",
+      alignItems: "flex-end",
+      justifyContent: "space-between",
+      gap: "1rem",
+      flexWrap: "wrap",
+      marginBottom: "0.75rem",
+    }}>
+
+      {/* Title + subtitle */}
+      <div>
+        <h2 style={{
+          margin: 0,
+          fontSize: "1.15rem",
+          fontWeight: 700,
+          color: "#1C1C1C",
+          letterSpacing: "-0.02em",
+          lineHeight: 1.2,
+        }}>
+          Knowledge Hub
+        </h2>
+        <p style={{
+          margin: "0.22rem 0 0",
+          fontSize: "0.75rem",
+          color: "#999",
+          fontWeight: 300,
+        }}>
+          Methods, tutorials, and research summaries
+        </p>
+      </div>
+
+      {/* Tag chips */}
+      <div style={{
+        display: "flex",
+        gap: "0.35rem",
+        flexWrap: "wrap",
+        alignItems: "center",
+      }}>
+        {["CRISPR", "Statistics", "Plant Science", "Genomics", "Tutorial"].map(tag => (
+          <span
+            key={tag}
+            onClick={() => navigate("/blog")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              padding: "0.22rem 0.65rem",
+              borderRadius: 999,
+              background: "#EAF3DE",
+              border: "1px solid #C0DD97",
+              color: "#3B6D11",
+              fontSize: "0.62rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "'DM Mono', monospace",
+              letterSpacing: 0.5,
+              transition: "background 0.15s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "#C0DD97"}
+            onMouseLeave={e => e.currentTarget.style.background = "#EAF3DE"}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    {/* Divider */}
+    <div style={{ height: 1, background: "#F0F0F0", marginBottom: "0.65rem" }} />
+
+    {/* Bottom row: browse link */}
+    <button
+      onClick={() => navigate("/blog")}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.4rem",
+        background: "none",
+        border: "none",
+        padding: 0,
+        fontSize: "0.75rem",
+        fontWeight: 600,
+        color: "#2D9E5F",
+        cursor: "pointer",
+        fontFamily: "'DM Sans', sans-serif",
+        letterSpacing: 0.2,
+      }}
+      onMouseEnter={e => e.currentTarget.style.color = "#1B7A4A"}
+      onMouseLeave={e => e.currentTarget.style.color = "#2D9E5F"}
+    >
+      <span style={{ fontSize: "1rem" }}>📚</span>
+      Browse all articles →
+    </button>
+  </div>
+
 
           {BLOG_POSTS.length === 0 ? (
   <div style={{
