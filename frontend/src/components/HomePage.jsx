@@ -439,7 +439,6 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
           {[
             { label: "GitHub",    url: "#", color: "#1C1C1C" }, {/* ← Replace # with actual URLs */}
-            { label: "Scholar",   url: "#", color: "#4285F4" },
           ].map(link => (
             <a
               key={link.label}
