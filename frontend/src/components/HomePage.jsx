@@ -259,56 +259,91 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ── Blog ───────────────────────────────────────────────────────── */}
+        {/* ── Knowledge Hub — single unified card ────────────────────────── */}
 <div style={fade(0.22)} id="blog">
-
-  {/* ── Option C header ─────────────────────────────────────────── */}
   <div style={{
     background: "#fff",
-    borderRadius: 14,
+    borderRadius: 16,
     border: "1.5px solid #EBEBEB",
-    padding: "1.1rem 1.35rem",
-    marginBottom: "1.25rem",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+    overflow: "hidden",
+    marginBottom: "2rem",
   }}>
 
-    {/* Top row: title + tag chips */}
+    {/* ── Card header ─────────────────────────────────────────────── */}
     <div style={{
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "space-between",
-      gap: "1rem",
-      flexWrap: "wrap",
-      marginBottom: "0.75rem",
+      padding: "1.1rem 1.35rem 0.9rem",
+      borderBottom: "1.5px solid #F0F0F0",
     }}>
 
-      {/* Title + subtitle */}
-      <div>
-        <h2 style={{
-          margin: 0,
-          fontSize: "1.15rem",
-          fontWeight: 700,
-          color: "#1C1C1C",
-          letterSpacing: "-0.02em",
-          lineHeight: 1.2,
-        }}>
-          Knowledge Hub
-        </h2>
-        <p style={{
-          margin: "0.22rem 0 0",
-          fontSize: "0.75rem",
-          color: "#999",
-          fontWeight: 300,
-        }}>
-          Methods, tutorials, and research summaries
-        </p>
+      {/* Title row */}
+      <div style={{
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        gap: "1rem",
+        flexWrap: "wrap",
+        marginBottom: "0.7rem",
+      }}>
+        <div>
+          <h2 style={{
+            margin: 0,
+            fontSize: "1.05rem",
+            fontWeight: 700,
+            color: "#1C1C1C",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+          }}>
+            📚 Knowledge Hub
+          </h2>
+          <p style={{
+            margin: "0.2rem 0 0",
+            fontSize: "0.72rem",
+            color: "#999",
+            fontWeight: 300,
+          }}>
+            Methods, tutorials, and research summaries
+          </p>
+        </div>
+
+        {/* View all button */}
+        <button
+          onClick={() => navigate("/blog")}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.35rem",
+            padding: "0.3rem 0.85rem",
+            borderRadius: 8,
+            border: "1.5px solid #2D9E5F",
+            background: "#EAF8F0",
+            color: "#2D9E5F",
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            cursor: "pointer",
+            fontFamily: "'DM Sans', sans-serif",
+            whiteSpace: "nowrap",
+            transition: "all 0.15s",
+            flexShrink: 0,
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = "#2D9E5F";
+            e.currentTarget.style.color = "#fff";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = "#EAF8F0";
+            e.currentTarget.style.color = "#2D9E5F";
+          }}
+        >
+          Browse all →
+        </button>
       </div>
 
       {/* Tag chips */}
       <div style={{
         display: "flex",
-        gap: "0.35rem",
+        gap: "0.32rem",
         flexWrap: "wrap",
-        alignItems: "center",
       }}>
         {["CRISPR", "Statistics", "Plant Science", "Genomics", "Tutorial"].map(tag => (
           <span
@@ -317,17 +352,16 @@ export default function HomePage() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.25rem",
-              padding: "0.22rem 0.65rem",
+              padding: "0.18rem 0.58rem",
               borderRadius: 999,
               background: "#EAF3DE",
               border: "1px solid #C0DD97",
               color: "#3B6D11",
-              fontSize: "0.62rem",
+              fontSize: "0.6rem",
               fontWeight: 600,
               cursor: "pointer",
               fontFamily: "'DM Mono', monospace",
-              letterSpacing: 0.5,
+              letterSpacing: 0.4,
               transition: "background 0.15s",
             }}
             onMouseEnter={e => e.currentTarget.style.background = "#C0DD97"}
@@ -339,82 +373,73 @@ export default function HomePage() {
       </div>
     </div>
 
-    {/* Divider */}
-    <div style={{ height: 1, background: "#F0F0F0", marginBottom: "0.65rem" }} />
+    {/* ── Card body ────────────────────────────────────────────────── */}
+    <div style={{ padding: "1.1rem 1.35rem 1.35rem" }}>
 
-    {/* Bottom row: browse link */}
-    <button
-      onClick={() => navigate("/blog")}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.4rem",
-        background: "none",
-        border: "none",
-        padding: 0,
-        fontSize: "0.75rem",
-        fontWeight: 600,
-        color: "#2D9E5F",
-        cursor: "pointer",
-        fontFamily: "'DM Sans', sans-serif",
-        letterSpacing: 0.2,
-      }}
-      onMouseEnter={e => e.currentTarget.style.color = "#1B7A4A"}
-      onMouseLeave={e => e.currentTarget.style.color = "#2D9E5F"}
-    >
-      <span style={{ fontSize: "1rem" }}>📚</span>
-      Browse all articles →
-    </button>
-  </div>
+      {BLOG_POSTS.length === 0 ? (
 
+        /* Empty state */
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "2rem 1rem",
+          textAlign: "center",
+          gap: "0.65rem",
+        }}>
+          <span style={{ fontSize: "2rem", opacity: 0.18 }}>📝</span>
+          <p style={{
+            margin: 0,
+            fontSize: "0.78rem",
+            color: "#CCCCCC",
+            fontWeight: 500,
+          }}>
+            Articles and tutorials coming soon
+          </p>
+          <button
+            onClick={() => navigate("/blog")}
+            style={{
+              marginTop: "0.35rem",
+              padding: "0.6rem 1.75rem",
+              background: "linear-gradient(135deg, #1a3a1a, #2d6a2d)",
+              border: "none",
+              borderRadius: 10,
+              color: "#fff",
+              fontSize: "0.82rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              letterSpacing: "0.02em",
+              boxShadow: "0 2px 10px rgba(26,58,26,0.22)",
+              transition: "opacity 0.15s",
+              fontFamily: "'DM Sans', sans-serif",
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+          >
+            Go to Knowledge Hub →
+          </button>
+        </div>
 
-          {BLOG_POSTS.length === 0 ? (
-  <div style={{
-    background: "#fff",
-    borderRadius: 16,
-    boxShadow: "0 2px 16px rgba(26,58,26,0.10)",
-    padding: "2rem",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 180,
-  }}>
-    <button onClick={() => navigate("/blog")} style={{
-      marginTop: "1rem",
-      padding: "0.75rem 2rem",
-      background: "linear-gradient(135deg,#1a3a1a,#2d6a2d)",
-      border: "none", borderRadius: 10, color: "#fff",
-      fontSize: "0.88rem", fontWeight: 600, cursor: "pointer",
-      letterSpacing: "0.02em",
-      boxShadow: "0 2px 10px rgba(26,58,26,0.25)",
-      transition: "opacity 0.15s",
-    }}
-      onMouseEnter={e => e.currentTarget.style.opacity = "0.88"}
-      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-      Go to Knowledge Hub →
-    </button>
-  </div>
-) : (
-  <div style={{
-    background: "#fff",
-    borderRadius: 16,
-    boxShadow: "0 2px 16px rgba(26,58,26,0.10)",
-    padding: "1rem",
-    marginBottom: "3rem",
-    maxWidth: "900px",  
-  margin: "0 auto 3rem",
-  }}>
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
-      gap: "0.85rem",
-    }}>
-      {BLOG_POSTS.slice(0, 3).map(post => <BlogCard key={post.id} post={post} />)}
+      ) : (
+
+        /* Blog post grid */
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
+          gap: "0.85rem",
+        }}>
+          {BLOG_POSTS.slice(0, 3).map(post => (
+            <BlogCard key={post.id} post={post} />
+          ))}
+        </div>
+
+      )}
+
     </div>
   </div>
-)}
-        </div>
+</div>
+
 
         {/* ── Developer + Support Banner ─────────────────────────────────── */}
 <div style={{
