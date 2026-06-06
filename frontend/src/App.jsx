@@ -9,7 +9,8 @@ import RegressionModule from "./modules/regression/RegressionModule";
 import BlogPage          from "./modules/blog/BlogPage";
 import BlogArticle       from "./modules/blog/BlogArticle";
 import SeedGerminationModule from "./modules/seed_germination/SeedGerminationModule";
-import FeedbackPage from "./modules/feedback/FeedbackPage";
+import AboutPage         from "./pages/AboutPage";
+import FeedbackPage      from "./modules/feedback/FeedbackPage";
 
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
@@ -30,18 +31,31 @@ const TopBar = () => {
       <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem" }}>
         🌿 OpenBiology
       </span>
-      {/* Blog link in TopBar so it's reachable from any module page */}
-      <button onClick={() => navigate("/blog")} style={{
-        background: "transparent", border: "none",
-        color: "rgba(255,255,255,0.65)", borderRadius: 8,
-        padding: "0.35rem 0.9rem", cursor: "pointer",
-        fontSize: "0.82rem", fontWeight: 500, marginLeft: "auto",
-      }}
-        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.65)"}
-      >
-        Blog
-      </button>
+
+      {/* Right-side nav links */}
+      <div style={{ marginLeft: "auto", display: "flex", gap: "0.25rem" }}>
+        {[
+          { label: "Blog",     path: "/blog"     },
+          { label: "Feedback", path: "/feedback" },
+          { label: "About",    path: "/about"    },
+        ].map(link => (
+          <button
+            key={link.path}
+            onClick={() => navigate(link.path)}
+            style={{
+              background: "transparent", border: "none",
+              color: "rgba(255,255,255,0.65)", borderRadius: 8,
+              padding: "0.35rem 0.9rem", cursor: "pointer",
+              fontSize: "0.82rem", fontWeight: 500,
+              fontFamily: "'DM Sans', sans-serif",
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+            onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.65)"}
+          >
+            {link.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
@@ -63,12 +77,12 @@ export default function App() {
       <Route path="/regression" element={<ModulePage><RegressionModule /></ModulePage>} />
       <Route path="/peg-calculator" element={<ModulePage><PEGCalculator /></ModulePage>} />
       <Route path="/portfolio"    element={<PortfolioPage />} />
-      {/* Blog routes — no ModulePage wrapper; BlogPage/BlogArticle have their own header */}
-      <Route path="/blog"          element={<BlogPage />} />
-      <Route path="/blog/:slug"    element={<BlogArticle />} />
+      <Route path="/blog"         element={<BlogPage />} />
+      <Route path="/blog/:slug"   element={<BlogArticle />} />
       <Route path="/seed-germination" element={<ModulePage><SeedGerminationModule /></ModulePage>} />
-      <Route path="/feedback" element={<ModulePage><FeedbackPage /></ModulePage>} />
-      {/* <Route path="/anova"      element={<ModulePage><AnovaModule /></ModulePage>} /> */}
+      <Route path="/feedback"     element={<ModulePage><FeedbackPage /></ModulePage>} />
+      <Route path="/about"        element={<AboutPage />} />
+      {/* <Route path="/anova" element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );
 }

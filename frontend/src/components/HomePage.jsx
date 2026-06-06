@@ -10,6 +10,7 @@ const NAV_SECTIONS = [
   { id: "plant-science",  label: "Plant Science" },
   { id: "bioinformatics", label: "Bioinformatics" },
   { id: "blog",           label: "Blog" },
+  { id: "about",          label: "About" },
   { id: "feedback", label: "Feedback" },
 ];
 
@@ -176,7 +177,7 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
           {NAV_SECTIONS.map(s => (
             <button key={s.id}
-              onClick={() => s.id === "blog" || s.id === "feedback"? navigate(`/${s.id}`): scrollTo(s.id)}
+              onClick={() =>["blog", "about", "feedback"].includes(s.id)? navigate(`/${s.id}`): scrollTo(s.id)}
               style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.65)", fontSize: "0.74rem", fontWeight: 500, cursor: "pointer", padding: "0.3rem 0.65rem", borderRadius: 6, transition: "color 0.15s, background 0.15s", fontFamily: "'DM Sans', sans-serif" }}
               onMouseEnter={e => { e.target.style.color = "#fff"; e.target.style.background = "rgba(255,255,255,0.1)"; }}
               onMouseLeave={e => { e.target.style.color = "rgba(255,255,255,0.65)"; e.target.style.background = "transparent"; }}
@@ -323,85 +324,266 @@ export default function HomePage() {
         </div>
 
         {/* ── Developer + Support Banner ─────────────────────────────────── */}
-        <div style={{ ...fade(0.26), background: "#fff", borderRadius: 16, border: "1px solid #EBEBEB", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", padding: "1.5rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem", flexWrap: "wrap", marginBottom: "2rem" }}>
+<div style={{
+  ...fade(0.26),
+  background: "#fff",
+  borderRadius: 16,
+  border: "1px solid #EBEBEB",
+  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+  padding: "1.5rem",
+  display: "flex",
+  gap: "1.25rem",
+  alignItems: "stretch",
+  flexWrap: "wrap",
+  marginBottom: "2rem",
+}}>
 
-          {/* Developer side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1.1rem", flex: "1 1 300px" }}>
-            <img src="https://rameshram96.github.io/Ramesh-Ramasamy/profile.jpg" alt="Ramesh R"
-              style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover", border: "2.5px solid #E8F4FD", flexShrink: 0, boxShadow: "0 2px 8px rgba(0,114,178,0.12)" }} />
-            <div>
-              <h3 style={{ margin: "0 0 0.15rem", fontSize: "0.9rem", fontWeight: 700, color: "#1C1C1C" }}>Ramesh R</h3>
-              <p style={{ margin: "0 0 0.55rem", fontSize: "0.7rem", color: "#0072B2", fontWeight: 500 }}>
-                Plant Physiologist · Genome Editor · IARI New Delhi
-              </p>
-              <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                {[
-                  { label: "GitHub",       url: "https://github.com/rameshram96",                                 color: "#1C1C1C" },
-                  { label: "ResearchGate", url: "https://www.researchgate.net/profile/Ramesh-R-8",                color: "#00CCBB" },
-                  { label: "Scholar",      url: "https://scholar.google.com/citations?user=pRR3FhsAAAAJ&hl=en",   color: "#4285F4" },
-                  { label: "Portfolio",    url: "/portfolio",                                                      color: "#0072B2" },
-                ].map(link => (
-                  <a key={link.label} href={link.url} target={link.url.startsWith("/") ? undefined : "_blank"} rel="noreferrer"
-                    onClick={link.url.startsWith("/") ? (e) => { e.preventDefault(); navigate(link.url); } : undefined}
-                    style={{ padding: "0.2rem 0.55rem", borderRadius: 6, border: `1px solid ${link.color}22`, background: `${link.color}0d`, color: link.color, fontSize: "0.65rem", fontWeight: 600, textDecoration: "none" }}>
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-                
-          <div style={{ display: "flex", alignItems: "center", gap: "1.1rem", flex: "1 1 300px" }}>
-            <img src="" alt="Mathiyarasi K"
-              style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover", border: "2.5px solid #E8F4FD", flexShrink: 0, boxShadow: "0 2px 8px rgba(0,114,178,0.12)" }} />
-            
-            <div>
-              <h3 style={{ margin: "0 0 0.15rem", fontSize: "0.9rem", fontWeight: 700, color: "#1C1C1C" }}>Mathiyarasi K</h3>
-              <p style={{ margin: "0 0 0.55rem", fontSize: "0.7rem", color: "#0072B2", fontWeight: 500 }}>
-                Environmental Science Scholar  · Climate CHange · IARI New Delhi
-              </p>
-              <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                {[
-                  { label: "GitHub",       url: "https://github.com/mathiyarasi21",                                 color: "#1C1C1C" },
-                  { label: "ResearchGate", url: "",                color: "#00CCBB" },
-                  { label: "Scholar",      url: "",   color: "#4285F4" },
-                  { label: "Portfolio",    url: "",                                                      color: "#0072B2" },
-                ].map(link => (
-                  <a key={link.label} href={link.url} target={link.url.startsWith("/") ? undefined : "_blank"} rel="noreferrer"
-                    onClick={link.url.startsWith("/") ? (e) => { e.preventDefault(); navigate(link.url); } : undefined}
-                    style={{ padding: "0.2rem 0.55rem", borderRadius: 6, border: `1px solid ${link.color}22`, background: `${link.color}0d`, color: link.color, fontSize: "0.65rem", fontWeight: 600, textDecoration: "none" }}>
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-          {/* Divider */}
-          <div style={{ width: 1, alignSelf: "stretch", background: "#EBEBEB", flexShrink: 0, display: "block" }} />
+  {/* ── Left: two developer cards stacked ──────────────────────── */}
+  <div style={{
+    flex: "1 1 300px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.85rem",
+  }}>
 
-          {/* Support side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", flex: "1 1 280px" }}>
-            <div style={{ border: "1.5px dashed #D0E8FF", borderRadius: 10, padding: "0.5rem", background: "#F8FBFF", flexShrink: 0 }}>
-              <img src="/upi-qr.png" alt="UPI QR"
-                onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
-                style={{ width: 72, height: 72, borderRadius: 6, display: "block" }} />
-              <div style={{ display: "none", width: 72, height: 72, alignItems: "center", justifyContent: "center", fontSize: 22 }}>📱</div>
-            </div>
-            <div>
-              <h4 style={{ margin: "0 0 0.3rem", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1C" }}>Support OpenBiology 🌱</h4>
-              <p style={{ margin: 0, fontSize: "0.72rem", color: "#777", lineHeight: 1.65, fontWeight: 300, maxWidth: 260 }}>
-                Openbiology.in is free for everyone. If it's been useful in your research, any support — however small — helps keep it running.{" "}
-                <em style={{ color: "#009E73" }}>No obligation at all.</em>
-              </p>
-              <p style={{ margin: "0.45rem 0 0", fontSize: "0.65rem", color: "#0072B2", fontWeight: 600, fontFamily: "'DM Mono'" }}>Scan QR · UPI supported</p>
-            </div>
-          </div>
+    {/* Developer 1 — Ramesh R */}
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "1.1rem",
+      background: "#FAFAFA",
+      borderRadius: 12,
+      border: "1px solid #F0F0F0",
+      padding: "0.9rem 1rem",
+    }}>
+      <img
+        src="https://rameshram96.github.io/Ramesh-Ramasamy/profile.jpg"
+        alt="Ramesh R"
+        style={{
+          width: 52, height: 52, borderRadius: "50%",
+          objectFit: "cover", flexShrink: 0,
+          border: "2.5px solid #E8F4FD",
+          boxShadow: "0 2px 8px rgba(0,114,178,0.12)",
+        }}
+      />
+      <div style={{ flex: 1 }}>
+        <h3 style={{ margin: "0 0 0.12rem", fontSize: "0.88rem",
+                     fontWeight: 700, color: "#1C1C1C" }}>
+          Ramesh R
+        </h3>
+        <p style={{ margin: "0 0 0.5rem", fontSize: "0.68rem",
+                    color: "#0072B2", fontWeight: 500 }}>
+          Plant Physiologist · Genome editor · IARI New Delhi
+        </p>
+        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+          {[
+            { label: "GitHub",       url: "https://github.com/rameshram96",                               color: "#1C1C1C" },
+            { label: "ResearchGate", url: "https://www.researchgate.net/profile/Ramesh-R-8",              color: "#00CCBB" },
+            { label: "Scholar",      url: "https://scholar.google.com/citations?user=pRR3FhsAAAAJ&hl=en", color: "#4285F4" },
+            { label: "Portfolio",    url: "/portfolio",                                                    color: "#0072B2" },
+          ].map(link => (
+            <a
+              key={link.label}
+              href={link.url}
+              target={link.url.startsWith("/") ? undefined : "_blank"}
+              rel="noreferrer"
+              onClick={link.url.startsWith("/")
+                ? (e) => { e.preventDefault(); navigate(link.url); }
+                : undefined}
+              style={{
+                padding: "0.18rem 0.5rem", borderRadius: 6,
+                border: `1px solid ${link.color}22`,
+                background: `${link.color}0d`,
+                color: link.color, fontSize: "0.62rem",
+                fontWeight: 600, textDecoration: "none",
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
+      </div>
+    </div>
+
+    {/* Developer 2 — Placeholder */}
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "1.1rem",
+      background: "#FAFAFA",
+      borderRadius: 12,
+      border: "1px solid #F0F0F0",
+      padding: "0.9rem 1rem",
+    }}>
+      {/* Replace src with actual photo URL when available */}
+      <div style={{
+        width: 52, height: 52, borderRadius: "50%",
+        background: "linear-gradient(135deg, #1a3a1a, #2d6a2d)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        flexShrink: 0, color: "#fff", fontWeight: 700, fontSize: "1.1rem",
+        border: "2.5px solid #E8F4ED",
+        boxShadow: "0 2px 8px rgba(45,106,45,0.12)",
+      }}>
+        {/* Replace with <img> once photo is available */}
+        ?
+      </div>
+      <div style={{ flex: 1 }}>
+        <h3 style={{ margin: "0 0 0.12rem", fontSize: "0.88rem",
+                     fontWeight: 700, color: "#1C1C1C" }}>
+          Mathiyarasi K
+        </h3>
+        <p style={{ margin: "0 0 0.5rem", fontSize: "0.68rem",
+                    color: "#009E73", fontWeight: 500 }}>
+          PhD Scholar·Environmental Science · ICAR-IARI 
+        </p>
+        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+          {[
+            { label: "GitHub",    url: "#", color: "#1C1C1C" }, {/* ← Replace # with actual URLs */}
+            { label: "Scholar",   url: "#", color: "#4285F4" },
+          ].map(link => (
+            <a
+              key={link.label}
+              href={link.url}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                padding: "0.18rem 0.5rem", borderRadius: 6,
+                border: `1px solid ${link.color}22`,
+                background: `${link.color}0d`,
+                color: link.color, fontSize: "0.62rem",
+                fontWeight: 600, textDecoration: "none",
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {/* ── Divider ─────────────────────────────────────────────────── */}
+  <div style={{
+    width: 1,
+    alignSelf: "stretch",
+    background: "#EBEBEB",
+    flexShrink: 0,
+  }} />
+
+  {/* ── Right: Support card ─────────────────────────────────────── */}
+  <div style={{
+    flex: "1 1 260px",
+    display: "flex",
+    alignItems: "center",
+    gap: "1.25rem",
+  }}>
+    <div style={{
+      border: "1.5px dashed #D0E8FF",
+      borderRadius: 10,
+      padding: "0.5rem",
+      background: "#F8FBFF",
+      flexShrink: 0,
+    }}>
+      <img
+        src="/upi-qr.png"
+        alt="UPI QR"
+        onError={e => {
+          e.target.style.display = "none";
+          e.target.nextSibling.style.display = "flex";
+        }}
+        style={{ width: 72, height: 72, borderRadius: 6, display: "block" }}
+      />
+      <div style={{
+        display: "none", width: 72, height: 72,
+        alignItems: "center", justifyContent: "center", fontSize: 22,
+      }}>
+        📱
+      </div>
+    </div>
+    <div>
+      <h4 style={{ margin: "0 0 0.3rem", fontSize: "0.85rem",
+                   fontWeight: 700, color: "#1C1C1C" }}>
+        Support OpenBiology 🌱
+      </h4>
+      <p style={{
+        margin: 0, fontSize: "0.72rem", color: "#777",
+        lineHeight: 1.65, fontWeight: 300, maxWidth: 240,
+      }}>
+        Openbiology.in is free for everyone. If it's been useful in your
+        research, any support — however small — helps keep it running.{" "}
+        <em style={{ color: "#009E73" }}>No obligation at all.</em>
+      </p>
+      <p style={{
+        margin: "0.45rem 0 0", fontSize: "0.65rem",
+        color: "#0072B2", fontWeight: 600,
+        fontFamily: "'DM Mono'",
+      }}>
+        Scan QR · UPI supported
+      </p>
+    </div>
+  </div>
+
+</div>
+
 
         {/* ── Footer ─────────────────────────────────────────────────────── */}
-        <div style={{ ...fade(0.3), textAlign: "center", color: "#CCCCCC", fontSize: "0.63rem", fontFamily: "'DM Mono'", letterSpacing: 1.3 }}>
-          OPENBIOLOGY · FREE & OPEN SOURCE · PLANT SCIENCE DATA ANALYSIS SUITE
-        </div>
+        <div style={{
+  ...fade(0.3),
+  borderTop: "1px solid #EBEBEB",
+  paddingTop: "1.75rem",
+  marginTop: "0.5rem",
+}}>
+  {/* Footer links row */}
+  <div style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "0.25rem",
+    flexWrap: "wrap",
+    marginBottom: "0.85rem",
+  }}>
+    {[
+      { label: "About",          path: "/about"    },
+      { label: "Privacy Policy", path: "/about#privacy"    },
+      { label: "Disclaimer",     path: "/about#disclaimer" },
+      { label: "Feedback",       path: "/feedback" },
+      { label: "Blog",           path: "/blog"     },
+      { label: "Portfolio",      path: "/portfolio"},
+    ].map((link, i, arr) => (
+      <span key={link.path} style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+        <button
+          onClick={() => navigate(link.path)}
+          style={{
+            background: "transparent", border: "none",
+            color: "#AAAAAA", fontSize: "0.68rem",
+            cursor: "pointer", padding: "0.1rem 0.25rem",
+            fontFamily: "'DM Sans', sans-serif",
+            transition: "color 0.15s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#555"}
+          onMouseLeave={e => e.currentTarget.style.color = "#AAAAAA"}
+        >
+          {link.label}
+        </button>
+        {i < arr.length - 1 && (
+          <span style={{ color: "#E0E0E0", fontSize: "0.65rem" }}>·</span>
+        )}
+      </span>
+    ))}
+  </div>
+
+  {/* Copyright line */}
+  <div style={{
+    textAlign: "center",
+    color: "#CCCCCC",
+    fontSize: "0.62rem",
+    fontFamily: "'DM Mono'",
+    letterSpacing: 1.2,
+  }}>
+    OPENBIOLOGY.IN · FREE & OPEN SOURCE · PLANT SCIENCE DATA ANALYSIS SUITE
+  </div>
+</div>
       </div>
     </div>
   );
