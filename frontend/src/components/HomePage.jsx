@@ -690,10 +690,7 @@ export default function HomePage() {
       </span>
     ))}
   </div>
-    {/* ADD THIS ↓ */}
-      <div style={fade(0.05)}>
-      <VisitorBadge />
-      </div>
+    
   {/* Copyright line */}
   <div style={{
     textAlign: "center",
@@ -701,9 +698,13 @@ export default function HomePage() {
     fontSize: "0.62rem",
     fontFamily: "'DM Mono'",
     letterSpacing: 1.2,
-  }}>
+   }}>
     OPENBIOLOGY.IN · FREE & OPEN SOURCE · PLANT SCIENCE DATA ANALYSIS SUITE
   </div>
+  {/* ADD THIS ↓ */}
+      <div style={fade(0.05)}>
+      <VisitorBadge />
+      </div>
 </div>
       </div>
     </div>
