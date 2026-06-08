@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SponsorBanner from "./SponsorBanner";
+import VisitorBadge from "./VisitorBadge";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 
@@ -689,7 +690,10 @@ export default function HomePage() {
       </span>
     ))}
   </div>
-
+    {/* ADD THIS ↓ */}
+      <div style={fade(0.05)}>
+      <VisitorBadge />
+      </div>
   {/* Copyright line */}
   <div style={{
     textAlign: "center",
