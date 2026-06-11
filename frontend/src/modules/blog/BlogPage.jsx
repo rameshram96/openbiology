@@ -113,9 +113,9 @@ export default function BlogPage() {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"flex", alignItems:"center",
                         gap:"0.7rem", marginBottom:"0.35rem" }}>
-            <span style={{ fontSize:22 }}>📝</span>
+            <span style={{ fontSize:22 }}>📚</span>
             <h1 style={{ margin:0, color:"#fff", fontSize:"1.4rem",
-                         fontWeight:700, letterSpacing:"-0.02em" }}>Blog</h1>
+                         fontWeight:700, letterSpacing:"-0.02em" }}>Knowledge Hub</h1>
           </div>
           <p style={{ margin:0, color:"rgba(255,255,255,0.6)",
                       fontSize:"0.82rem", fontWeight:300 }}>

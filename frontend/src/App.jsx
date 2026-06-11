@@ -11,7 +11,7 @@ import BlogArticle       from "./modules/blog/BlogArticle";
 import SeedGerminationModule from "./modules/seed_germination/SeedGerminationModule";
 import AboutPage         from "./pages/AboutPage";
 import FeedbackPage      from "./modules/feedback/FeedbackPage";
-
+import AnovaModule from "./modules/anova/AnovaModule";
 // import AnovaModule    from "./modules/anova/AnovaModule";
 
 const TopBar = () => {
@@ -82,6 +82,7 @@ export default function App() {
       <Route path="/seed-germination" element={<ModulePage><SeedGerminationModule /></ModulePage>} />
       <Route path="/feedback"     element={<ModulePage><FeedbackPage /></ModulePage>} />
       <Route path="/about"        element={<AboutPage />} />
+      <Route path="/anova" element={<ModulePage><AnovaModule /></ModulePage>} />
       {/* <Route path="/anova" element={<ModulePage><AnovaModule /></ModulePage>} /> */}
     </Routes>
   );

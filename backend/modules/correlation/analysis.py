@@ -129,7 +129,7 @@ def _draw_heatmap(
     fig, axes = plt.subplots(
         2, 1,
         figsize=(fig_size, fig_size * 0.92),
-        dpi=120,
+        dpi=300,
         gridspec_kw={"height_ratios": [0.92, 0.08]},
     )
     fig.patch.set_facecolor("#FAFAFA")
@@ -210,7 +210,7 @@ def _draw_heatmap(
     )
 
     fig.tight_layout(pad=1.5)
-    fig.savefig(out_path, dpi=120, bbox_inches="tight",
+    fig.savefig(out_path, dpi=300, bbox_inches="tight",
                 facecolor=fig.get_facecolor())
     plt.close(fig)
 
@@ -228,7 +228,7 @@ def _draw_scatter(
 ):
     axis_fs   = float(params.get("axis_font_size", 0.85))
     plot_title= params.get("plot_title", "")
-    dpi       = int(params.get("scatter_dpi", 150))
+    dpi       = int(params.get("scatter_dpi", 300))
     title     = plot_title if plot_title else f"{method.upper()} Correlation — Scatter Matrix"
 
     p_cnt     = len(variables)

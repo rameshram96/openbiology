@@ -9,7 +9,7 @@ from modules.two_var_correlation.router import router as two_var_router
 from modules.regression.router import router as regression_router
 from modules.pca.router import router as pca_router
 from modules.seed_germination.router import router as seed_router
-
+from modules.anova.router import router as anova_router
 
 app = FastAPI(
     title="OpenBiology",
@@ -30,6 +30,7 @@ app.include_router(two_var_router)
 app.include_router(pca_router)
 app.include_router(regression_router)
 app.include_router(seed_router)
+app.include_router(anova_router)
 
 @app.get("/")
 def root():

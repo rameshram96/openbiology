@@ -343,8 +343,7 @@ export default function CorrelationModule() {
             {loading && (
               <div style={{ ...box, padding:"3rem", textAlign:"center" }}>
                 <div style={{ fontSize:36 }}>⚙️</div>
-                <p style={{ color:"#0072B2", fontWeight:600 }}>Running R analysis...</p>
-                <p style={{ color:"#AAA", fontSize:"0.73rem" }}>Computing correlations and generating plots</p>
+                <p style={{ color:"#0072B2", fontWeight:600 }}>Computing correlations and generating plots...</p>
               </div>
             )}
 

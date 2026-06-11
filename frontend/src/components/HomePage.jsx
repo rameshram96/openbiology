@@ -27,7 +27,7 @@ const ANALYSIS_MODULES = [
     status:   "ready",
     color:    "#E69F00"
   },
-  { id: "anova",          icon: "◈", title: "ANOVA Suite",            subtitle: "One-way · Two-way · Three-way",  desc: "Compare means across treatment groups with post-hoc tests — Tukey, Duncan, LSD.",               status: "soon",   color: "#E69F00" },
+  { id: "anova",          icon: "◈", title: "ANOVA Suite",            subtitle: "One-way · Two-way · Three-way",  desc: "Compare means across treatment groups with post-hoc tests — Tukey, Duncan, LSD.",               status: "ready",   color: "#E69F00" },
   { id: "pca",            icon: "◎", title: "Principle Component Analysis(PCA)",     subtitle: "PCA · Cluster · Discriminant",   desc: "Reduce dimensionality and uncover hidden structure in multi-trait phenotypic data.",            status: "ready",   color: "#009E73" },
   { id:"regression", icon:"◬", title:"Regression", subtitle:"Simple · Multiple · Stepwise",
   desc:"Model trait relationships with full coefficient tables, ANOVA, R², and diagnostic plots.",
