@@ -1,36 +1,9 @@
-/**
- * NoticeBar.jsx
- *
- * A continuously scrolling marquee strip showing rotating announcements.
- * Matches the navbar's green gradient.
- *
- * PLACEMENT (in HomePage.jsx)
- * ────────────────────────────
- * 1. Import at top:
- *      import NoticeBar from "./NoticeBar";
- *
- * 2. Place directly below the navbar div, before the
- *    <div style={{ maxWidth: 1100, ... }}> content wrapper:
- *
- *      </div>  ← end of navbar
- *      <NoticeBar />
- *      <div style={{ maxWidth: 1100, ... }}>  ← content wrapper
- *
- * EDITING ANNOUNCEMENTS
- * ───────────────────────
- * Just edit the NOTICES array below — add, remove, or reorder freely.
- * Each item can optionally have an emoji prefix baked into the text.
- */
-
 import { useEffect } from "react";
 
-// ─── Edit your rotating announcements here ───────────────────────────────────
+
 const NOTICES = [
+  "🌐This Site still under construction kindly verify the results, if any issues arises let us know through the feedback form",
   "🌱 New: Seed Germination & Seedling Analysis module — 16 indices + Weibull T50 fitting",
-  "📊 PCA module now live — Scree, Score, Biplot & Loading Heatmap with full Excel export",
-  "🧬 PTGprimerDesigner & BioSafe Primer tools available for CRISPR construct design",
-  "📈 Regression module supports Simple, Multiple & Stepwise selection (AIC/BIC/p-value)",
-  "💧 PEG Calculator — compute osmotic potential for PEG 6000 / 8000 instantly",
   "📝 Knowledge Hub — tutorials and methods notes for plant science research",
   "🆓 OpenBiology is 100% free & open — support us if it helps your research",
 ];
