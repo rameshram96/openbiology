@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SponsorBanner from "./SponsorBanner";
 import VisitorBadge from "./VisitorBadge";
+import NoticeBar from "./NoticeBar";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 
@@ -212,8 +213,10 @@ export default function HomePage() {
           <p style={{ color: "#777", fontSize: "0.9rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.8, fontWeight: 300 }}>
             A free platform for data analysis, plant science utilities, and bioinformatics — built by a researcher, for researchers.
           </p>
+            <NoticeBar />   {/* ADD THIS */}
+          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "2.75rem 2rem 3.5rem" }}>
         </div>
-          <div style={fade(0.06)}>
+           <div style={fade(0.06)}>
              <SponsorBanner />
           </div>
         {/* ── Data Analysis ──────────────────────────────────────────────── */}
