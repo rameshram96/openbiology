@@ -197,7 +197,7 @@ export default function HomePage() {
           <span style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.65rem", fontFamily: "'DM Mono'" }}>v1.0</span>
         </div>
       </div>
-
+        <NoticeBar />
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "2.75rem 2rem 3.5rem" }}>
 
         {/* ── Hero ───────────────────────────────────────────────────────── */}
@@ -213,8 +213,6 @@ export default function HomePage() {
           <p style={{ color: "#777", fontSize: "0.9rem", maxWidth: 480, margin: "0 auto", lineHeight: 1.8, fontWeight: 300 }}>
             A free platform for data analysis, plant science utilities, and bioinformatics — built by a researcher, for researchers.
           </p>
-            <NoticeBar />   {/* ADD THIS */}
-          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "2.75rem 2rem 3.5rem" }}>
         </div>
            <div style={fade(0.06)}>
              <SponsorBanner />
